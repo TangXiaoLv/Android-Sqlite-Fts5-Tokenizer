@@ -1,5 +1,4 @@
 /*
-**
 ** 中文分词器
 */
 #include <stdio.h>
@@ -90,7 +89,7 @@ int fts5WcicuTokenize(
 
     UErrorCode status = U_ZERO_ERROR;
     int32_t dst_len = 0;
-    UChar32 c = NULL;
+    UChar32 c = 0;
 
     if (nText < 0)
         nText = strlen(pText);
@@ -240,8 +239,8 @@ int fts5WcicuTokenize(
 }
 
 static int find_splited_ideo_token(mm_cursor_t *cur, int32_t *start, int32_t *end) {
-    int32_t s, e;
-    UChar32 c;
+    int32_t s = 0, e = 0;
+    UChar32 c= 0;
 
     if (cur->ideo_state < 0)
         return 0;

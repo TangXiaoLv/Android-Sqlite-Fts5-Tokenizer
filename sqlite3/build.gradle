@@ -27,8 +27,21 @@ android {
     publishNonDefault true
     buildTypes {
         release {
+            sourceSets.main {
+                jni.srcDirs = []
+                jniLibs.srcDir 'src/main/libs'
+            }
+
             minifyEnabled false
+            debuggable false
+            jniDebuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            debuggable true
+            jniDebuggable true
         }
     }
 
@@ -36,16 +49,10 @@ android {
         /*ndkBuild {
             path 'src/main/jni/Android.mk'
         }*/
-        /*cmake {
+        cmake {
             path 'src/main/cpp/CMakeLists.txt'
-        }*/
+        }
     }
-
-    sourceSets.main {
-        jni.srcDirs = []
-        jniLibs.srcDir 'src/main/libs'
-    }
-
 }
 
 dependencies {

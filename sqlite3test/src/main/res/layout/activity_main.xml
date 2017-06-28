@@ -28,14 +28,6 @@
             <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="load lib"
-                    android:id="@+id/load"
-                    android:layout_gravity="center_horizontal"
-                    android:onClick="load"/>
-
-            <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="Run all tests!"
                     android:id="@+id/button"
                     android:layout_gravity="center_horizontal"
