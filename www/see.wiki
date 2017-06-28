@@ -1,0 +1,94 @@
+
+<h1>Using The SQLite Encryption Extension</h1>
+
+<p>
+  The <a href=http://www.sqlite.org/see/doc/trunk/www/readme.wiki>The SQLite Encryption Extension</a> 
+  provides an easy way to create, read and write encrypted database files.
+  It may be used with the SQLite Android bindings to add encrypted database
+  capability to any application.
+
+<h2> Building a SEE Enabled Version </h2>
+<p>
+Unless you are using a [./install.wiki#prebuilt | pre-built aar file] to use
+the SEE extension with the SQLite Android bindings you will need to build
+a custom version, either as a [./install.wiki#customaar | custom aar file]
+or by [./install.wiki#directint|directly integrating] the code with the application.
+<p>
+To do this, follow the instructions linked above. Except, before running
+the <code>ndk-build</code> command to build the native libraries:
+
+<ol>
+  <li> Replace the <code>sqlite3.c</code> and <code>sqlite3.h</code> files
+  with the SEE enable versions (i.e. the concatenation of sqlite3.c and see.c -
+  refer to the link above for details). 
+
+  <li> Edit the Android.mk file so as to uncomment the second of the two
+  lines reproduced below:
+
+<verbatim>
+  # If using SEE, uncomment the following:
+  # LOCAL_CFLAGS += -DSQLITE_HAS_CODEC
+</verbatim>
+</ol>
+
+<h2> Application Code Notes </h2>
+
+<p>
+  After opening or creating an encrypted database, the application must
+  immediately execute a PRAGMA to configure the encryption key. This must
+  be done before any other database methods are called. For example:
+
+<verbatim>
+  import org.sqlite.database.sqlite.SQLiteDatabase;
+
+    ...
+
+  SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase("my.db", null);
+  db.execSQL("PRAGMA key = 'secretkey'");
+</verbatim>
+
+<p>
+  Or, if you are using the
+  <a href=http://developer.android.com/reference/android/database/sqlite/SQLiteOpenHelper.html>SQLiteOpenHelper</a>
+  helper class, the PRAGMA must be the first thing executed within the
+  onConfigure() callback. For example:
+
+<verbatim>
+  import org.sqlite.database.sqlite.SQLiteDatabase;
+  import org.sqlite.database.sqlite.SQLiteHelper;
+
+    ...
+
+  class MyHelper extends SQLiteOpenHelper {
+    ...
+    void onConfigure(SQLiteDatabase db){
+      db.execSQL("PRAGMA key = 'secretkey'");
+    }
+    ...
+  }
+</verbatim>
+
+<p>
+  Refer to the <a href=http://www.sqlite.org/see/doc/trunk/www/readme.wiki>
+  SEE documentation</a> for further details regarding encryption keys.
+
+<p>Aside from supporting encrypted databases, SEE-enabled builds behave
+differently in two more respects:
+
+<ol>
+  <li> <p>The SQLiteDatabase.<a href="http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html#enableWriteAheadLogging()">enableWriteAheadLogging()</a> method does not enable
+       connection pooling. It is not possible for connection pooling to be
+       used with a SEE-enabled build (even if the database is unencrypted).
+
+  <li> <p>In Android, if database corruption is encountered, or if an attempt is
+       made to open a file that is not an SQLite database, the default
+       behaviour is to delete the file and create an empty database file in 
+       its place. In a SEE-enabled build, the default behaviour is to throw
+       an exception.<br><br>
+       The reason for this is that supplying an incorrect encryption key
+       is indistinguishable from opening a file that is not a database file.
+       And it seems too dangerous to simply delete the file in this case.
+       <br><br>
+       The default behaviour can be overriden using the
+       <a href="http://developer.android.com/reference/android/database/DatabaseErrorHandler.html">DatabaseErrorHandler</a> interface.
+</ol>

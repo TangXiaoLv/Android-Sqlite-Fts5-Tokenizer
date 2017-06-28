@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.4.1)
+set(ICU_COMMON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/icu_common)
+set(ICU_I18N_DIR ${CMAKE_CURRENT_SOURCE_DIR}/icu_i18n)
+set(ICU_COMPAT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/icu_compat)
+set(ICU_LIB ${CMAKE_CURRENT_SOURCE_DIR}/icu_lib)
+
+#add_subdirectory(icu_common_59)
+#add_subdirectory(icu_i18n_59)
+add_subdirectory(icu_compat)
+add_subdirectory(sqlite_319)

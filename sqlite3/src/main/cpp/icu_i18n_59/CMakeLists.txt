@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.4.1)
+project(icui18n C CXX)
+
+aux_source_directory(${ICU_I18N_DIR} ICU_I18N_SOURCE)
+
+INCLUDE_DIRECTORIES(${ICU_I18N_DIR})
+INCLUDE_DIRECTORIES(${ICU_I18N_DIR}/unicode)
+INCLUDE_DIRECTORIES(${ICU_COMMON_DIR})
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
+-D_REENTRANT \
+-DU_I18N_IMPLEMENTATION \
+-O3 \
+-fvisibility=hidden")
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_REENTRANT")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DU_I18N_IMPLEMENTATION")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -fvisibility=hidden")
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DPIC -fPIC")
+
+#add_library(icui18n SHARED ${ICU_I18N_SOURCE})
+add_library(icui18n STATIC ${ICU_I18N_SOURCE})
+
+target_link_libraries(icui18n icuuc)

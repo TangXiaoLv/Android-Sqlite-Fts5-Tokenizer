@@ -1,0 +1,17 @@
+==185526
+sqlite3Fts5ParseError(pParse, "fts5: syntax error near \"%.1s\"", z);
+return FTS5_EOF;
+c==>
+//sqlite3Fts5ParseError(pParse, "fts5: syntax error near \"%.1s\"", z);
+//return FTS5_EOF;
+==185526
+
+==201523
++==> #include "wcicu_tokenizer.h"
+==201523
+
+==201538
++==> { "wcicu",    {fts5WcicuCreate, fts5WcicuDelete, fts5WcicuTokenize }},
+==201538
+
+
