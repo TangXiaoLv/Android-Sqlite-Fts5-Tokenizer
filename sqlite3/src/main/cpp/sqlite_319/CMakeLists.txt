@@ -20,16 +20,20 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} \
 # This is important - it causes SQLite to use memory for temp files. Since
 # Android has no globally writable temp directory, if this is not defined the
 # application throws an exception when it tries to create a temp file.
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DSQLITE_TEMP_STORE=3")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_CONFIG_H -DKHTML_NO_EXCEPTIONS -DGKWQ_NO_JAVA")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNO_SUPPORT_JS_BINDING -DQT_NO_WHEELEVENT -DKHTML_NO_XBL")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -U__APPLE__")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_STRCHRNUL=0")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DSQLITE_USE_URI=1")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-parameter -Wno-int-to-pointer-cast")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-uninitialized -Wno-parentheses")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} \
+-DSQLITE_TEMP_STORE=3 \
+-DHAVE_CONFIG_H -DKHTML_NO_EXCEPTIONS -DGKWQ_NO_JAVA \
+-DNO_SUPPORT_JS_BINDING -DQT_NO_WHEELEVENT -DKHTML_NO_XBL \
+-U__APPLE__ \
+-DHAVE_STRCHRNUL=0 \
+-DSQLITE_USE_URI=1")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} \
+-Wno-unused-parameter \
+-Wno-int-to-pointer-cast \
+-Wno-uninitialized \
+-Wno-parentheses")
 
-#wc
+#WC
 set(WC_SQLITE_FLAGS "${CMAKE_C_FLAGS} \
 -Wall -Werror -ffunction-sections -fdata-sections -Wno-unused \
 -DSQLITE_CORE \
@@ -56,15 +60,13 @@ set(WC_SQLITE_FLAGS "${CMAKE_C_FLAGS} \
 set(ANDROID_SQLITE_FLAGS "${WC_SQLITE_FLAGS} \
 -Dfdatasync=fdatasync \
 -DSQLITE_POWERSAFE_OVERWRITE=1 \
--DSQLITE_DEFAULT_AUTOVACUUM=1 \
--DSQLITE_OMIT_BUILTIN_TEST \
 -DSQLITE_OMIT_COMPILEOPTION_DIAGS \
 -DSQLITE_OMIT_LOAD_EXTENSION \
--DSQLITE_DEFAULT_FILE_PERMISSIONS \
--DHAVE_MALLOC_H=1 \
--DHAVE_MALLOC_USABLE_SIZE")
+-DSQLITE_DEFAULT_FILE_PERMISSIONS=0600")
+#-DSQLITE_UNTESTABLE 禁止调试 / 发布时加上
+#-DSQLITE_DEFAULT_AUTOVACUUM=1 打开自动剪裁
 
-set(CMAKE_C_FLAGS "${WC_SQLITE_FLAGS}")
+set(CMAKE_C_FLAGS "${ANDROID_SQLITE_FLAGS}")
 
 #C++
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-conversion-null")

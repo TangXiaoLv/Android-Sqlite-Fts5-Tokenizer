@@ -1,10 +1,20 @@
-==185526
-sqlite3Fts5ParseError(pParse, "fts5: syntax error near \"%.1s\"", z);
-return FTS5_EOF;
-c==>
+==186780
 //sqlite3Fts5ParseError(pParse, "fts5: syntax error near \"%.1s\"", z);
 //return FTS5_EOF;
-==185526
+==186780
+
+==186748
+//case '(':  tok = FTS5_LP;    break;
+//case ')':  tok = FTS5_RP;    break;
+//case '{':  tok = FTS5_LCP;   break;
+//case '}':  tok = FTS5_RCP;   break;
+//case ':':  tok = FTS5_COLON; break;
+//case ',':  tok = FTS5_COMMA; break;
+//case '+':  tok = FTS5_PLUS;  break;
+case '*':  tok = FTS5_STAR;  break;
+//case '-':  tok = FTS5_MINUS; break;
+case '\0': tok = FTS5_EOF;   break;
+==186748
 
 ==201523
 +==> #include "wcicu_tokenizer.h"

@@ -131,12 +131,8 @@ public class MainActivity extends AppCompatActivity {
     */
     public void thread_test_2() {
         final long t0 = System.nanoTime();
-        boolean suc = SQLiteDatabase.deleteDatabase(DB_PATH);
-        //final SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH, null);
-        final SQLiteDatabase db = SQLiteDatabase.openDatabase(
-                DB_PATH.getPath(), null, SQLiteDatabase.NO_LOCALIZED_COLLATORS |
-                        SQLiteDatabase.CREATE_IF_NECESSARY|
-                        SQLiteDatabase.OPEN_READWRITE);
+        SQLiteDatabase.deleteDatabase(DB_PATH);
+        final SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH, null);
 
         db.execSQL("CREATE TABLE t1(x, y)");
         db.execSQL("INSERT INTO t1 VALUES (1, 2), (3, 4)");

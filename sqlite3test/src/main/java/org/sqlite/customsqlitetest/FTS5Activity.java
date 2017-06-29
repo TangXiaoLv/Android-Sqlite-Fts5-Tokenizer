@@ -45,7 +45,7 @@ public class FTS5Activity extends Activity {
         showing.setText("");
         String text = search.getText().toString();
         if (!TextUtils.isEmpty(text)) {
-            Cursor query = db.rawQuery("SELECT * FROM message WHERE message MATCH ?", new String[]{text});
+            Cursor query = db.rawQuery("SELECT * FROM message WHERE message MATCH \"?\"", new String[]{text});
             StringBuilder b = new StringBuilder("Count:");
             b.append(query.getCount()).append("\n");
             while (query.moveToNext()) {

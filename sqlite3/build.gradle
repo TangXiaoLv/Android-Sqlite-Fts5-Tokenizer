@@ -11,7 +11,6 @@ android {
         versionName "1.0"
 
         ndk {
-            // 设置支持的SO库架构
             abiFilters 'armeabi'//, 'armeabi-v7a'//, 'x86'//, 'x86_6 4', 'arm64-v8a'
         }
 
@@ -27,11 +26,6 @@ android {
     publishNonDefault true
     buildTypes {
         release {
-            sourceSets.main {
-                jni.srcDirs = []
-                jniLibs.srcDir 'src/main/libs'
-            }
-
             minifyEnabled false
             debuggable false
             jniDebuggable false
@@ -52,6 +46,11 @@ android {
         cmake {
             path 'src/main/cpp/CMakeLists.txt'
         }
+    }
+
+    sourceSets.main {
+        jni.srcDirs = []
+        //jniLibs.srcDir 'src/main/libs'
     }
 }
 
