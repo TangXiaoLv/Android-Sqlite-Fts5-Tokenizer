@@ -72,10 +72,17 @@ set(CMAKE_C_FLAGS "${ANDROID_SQLITE_FLAGS}")
 #C++
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-conversion-null")
 
-if ("${CMAKE_ANDROID_ARCH_ABI}" STREQUAL arm)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPACKED='__attribute__ ((packed))'")
+#release
+if (${CMAKE_BUILD_TYPE} STREQUAL "Release")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -DSQLITE_UNTESTABLE")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -DSQLITE_UNTESTABLE")
+    message(build type : Release)
+endif ()
+
+if (${CMAKE_ANDROID_ARCH_ABI} STREQUAL "arm")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPACKED='__attribute__ ((packed))'")
 else ()
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPACKED")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPACKED")
 endif ()
 
 INCLUDE_DIRECTORIES(.)

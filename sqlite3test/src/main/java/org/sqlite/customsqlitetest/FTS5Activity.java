@@ -5,12 +5,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.sqlite.database.extra.Enhance;
 import org.sqlite.database.sqlite.SQLiteDatabase;
 
 import java.io.File;
@@ -34,9 +32,6 @@ public class FTS5Activity extends Activity {
         load();
         dbFile = getApplicationContext().getDatabasePath("test2.db");
         dbFile.getParentFile().mkdirs();
-
-        /*Test*/
-        /*Enhance.initFtsTokenizer(dbFile.getPath());*/
     }
 
     public void search(View view) {
@@ -45,7 +40,7 @@ public class FTS5Activity extends Activity {
         showing.setText("");
         String text = search.getText().toString();
         if (!TextUtils.isEmpty(text)) {
-            Cursor query = db.rawQuery("SELECT * FROM message WHERE message MATCH \"?\"", new String[]{text});
+            Cursor query = db.rawQuery("SELECT * FROM message WHERE message MATCH ?", new String[]{text});
             StringBuilder b = new StringBuilder("Count:");
             b.append(query.getCount()).append("\n");
             while (query.moveToNext()) {
@@ -55,10 +50,6 @@ public class FTS5Activity extends Activity {
             showing.setText(b.toString());
             query.close();
         }
-
-        /*Test*/
-        /*String text = search.getText().toString();
-        Enhance.query(text);*/
     }
 
     public void create(View view) {
@@ -90,9 +81,5 @@ public class FTS5Activity extends Activity {
         ContentValues values = new ContentValues();
         values.put("msg", text);
         db.insert("message", null, values);
-
-        /*Test*/
-        /*String text = insert.getText().toString();
-        Enhance.insert(text);*/
     }
 }

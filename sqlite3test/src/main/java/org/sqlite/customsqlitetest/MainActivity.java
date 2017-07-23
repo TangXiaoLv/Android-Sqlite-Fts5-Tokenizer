@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.json.JSONObject;
+import org.sqlite.customsqlitetest.benchmark.BenchmarkActivity;
 import org.sqlite.database.DatabaseErrorHandler;
 import org.sqlite.database.sqlite.SQLiteDatabase;
 import org.sqlite.database.sqlite.SQLiteStatement;
@@ -519,4 +520,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), FTS5Activity.class);
         startActivity(intent);
     }
+
+    public void benchmark(View view) {
+        Intent intent = new Intent(getApplicationContext(), BenchmarkActivity.class);
+        startActivity(intent);
+    }
+
 }
