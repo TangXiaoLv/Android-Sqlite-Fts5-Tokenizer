@@ -54,6 +54,9 @@ int output_token(mm_cursor_t *cur,
                  int *piEndOffset,
                  int *piPosition);
 
+static
+void trim(char *str);
+
 int fts5WcicuCreate(void *pCtx, const char **azArg, int nArg, Fts5Tokenizer **ppOut) {
     mm_tokenizer_t *tok = sqlite3_malloc(sizeof(mm_tokenizer_t));
     if (!tok)
@@ -83,6 +86,12 @@ int fts5WcicuTokenize(
         const char *pText, int nText,
         int (*xToken)(void *pCtx, int tflags, const char *pToken, int nToken, int iStart, int iEnd)
 ) {
+    //trim string
+    char dText[nText + 1];
+    strcpy(dText, pText);
+    trim(dText);
+    nText = strlen(dText);
+
     //open
     mm_tokenizer_t *tok = (mm_tokenizer_t *) pTokenizer;
     mm_cursor_t *cur = NULL;
@@ -92,7 +101,7 @@ int fts5WcicuTokenize(
     UChar32 c = 0;
 
     if (nText < 0)
-        nText = strlen(pText);
+        nText = strlen(dText);
 
     dst_len = ROUND4(nText + 1);
     cur = (mm_cursor_t *) sqlite3_malloc(
@@ -122,7 +131,7 @@ int fts5WcicuTokenize(
         if (i_input >= nText)
             break;
 
-        U8_NEXT(pText, i_input, nText, c);
+        U8_NEXT(dText, i_input, nText, c);
         if (!c)
             break;
         if (c < 0)
@@ -240,7 +249,7 @@ int fts5WcicuTokenize(
 
 static int find_splited_ideo_token(mm_cursor_t *cur, int32_t *start, int32_t *end) {
     int32_t s = 0, e = 0;
-    UChar32 c= 0;
+    UChar32 c = 0;
 
     if (cur->ideo_state < 0)
         return 0;
@@ -373,6 +382,47 @@ void printTextRange(UChar *str, int32_t start, int32_t end) {
     charBuf[sizeof(charBuf) - 1] = 0;
     ALOGE("string[%2d..%2d] \"%s\"\n", start, end, charBuf);
     str[end] = savedEndChar;
+}
+
+void trim(char *str) {
+    if (str == NULL || *str == '\0') {
+        return;
+    }
+
+    char *start;
+    char *end;
+    size_t len = strlen(str);
+
+    start = str;
+    end = str + len - 1;
+
+    while (1) {
+        char c = *start;
+        if (!u_isspace(c))
+            break;
+
+        start++;
+        if (start > end) {
+            str[0] = '\0';
+            return;
+        }
+    }
+
+
+    while (1) {
+        char c = *end;
+        if (!u_isspace(c))
+            break;
+
+        end--;
+        if (start > end) {
+            str[0] = '\0';
+            return;
+        }
+    }
+
+    memmove(str, start, end - start + 1);
+    str[end - start + 1] = '\0';
 }
 
 /* Print each element in order: */
