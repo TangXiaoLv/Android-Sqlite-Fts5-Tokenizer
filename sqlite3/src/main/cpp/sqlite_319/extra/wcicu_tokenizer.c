@@ -189,7 +189,8 @@ int fts5WcicuTokenize(
                 end = ubrk_next(cur->iter);
                 if (end == UBRK_DONE) {
                     sqlite3_mm_clear_error();
-                    return SQLITE_DONE;
+                    rc = SQLITE_DONE;
+                    goto end_to_return;
                 }
 
                 token_type = ubrk_getRuleStatus(cur->iter);
@@ -238,6 +239,8 @@ int fts5WcicuTokenize(
         rc = xToken(pCtx, 0, pToken, nBytes, iStartOffset, iEndOffset);
     }
 
+    goto end_to_return;
+end_to_return:
     if (rc == SQLITE_DONE) rc = SQLITE_OK;
     //close
     ubrk_close(cur->iter);

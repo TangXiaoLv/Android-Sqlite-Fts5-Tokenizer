@@ -16,7 +16,7 @@ android {
 
         externalNativeBuild {
             cmake {
-                cFlags "-std=c99"
+                cFlags "-std=c11"
                 cppFlags "-std=c++11 -frtti -fexceptions"
                 arguments "-DANDROID_STL=gnustl_static"
             }
