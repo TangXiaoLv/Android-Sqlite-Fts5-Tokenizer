@@ -221,7 +221,7 @@ public final class CloseGuard {
      * Interface to allow customization of reporting behavior.
      */
     public static interface Reporter {
-        public void report (String message, Throwable allocationSite);
+        public void report(String message, Throwable allocationSite);
     }
 
     /**

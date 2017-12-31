@@ -36,9 +36,9 @@ import android.util.Pair;
  * following:
  * <ul>
  *   <li>{@link SQLiteDatabase#openOrCreateDatabase(String,
- *      org.sqlite.database.sqlite.SQLiteDatabase.CursorFactory, DatabaseErrorHandler)}</li>
+ *      SQLiteDatabase.CursorFactory, DatabaseErrorHandler)}</li>
  *   <li>{@link SQLiteDatabase#openDatabase(String,
- *      org.sqlite.database.sqlite.SQLiteDatabase.CursorFactory, int, DatabaseErrorHandler)}</li>
+ *      SQLiteDatabase.CursorFactory, int, DatabaseErrorHandler)}</li>
  * </ul>
  * The specified {@link DatabaseErrorHandler} is used to handle database corruption errors, if they
  * occur.

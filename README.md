@@ -4,7 +4,7 @@ Sqlite3全文检索是本地搜索引擎，用来搜索大数据量(几十万条
 
 源码配置
 ---
-Sqlite3源码：[3.19.3](http://sqlite.org/android/info/a7c884060e3c562e)
+Sqlite3源码：[3.21.0](http://sqlite.org/android/info/52cf12a73e767323)
 
 fts5分词器：移植于微信的[fts4分词器](https://github.com/Tencent/wcdb/tree/master/fts)并对搜索精度做了调优。
 

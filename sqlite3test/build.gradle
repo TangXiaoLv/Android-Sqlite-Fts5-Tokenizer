@@ -1,12 +1,18 @@
 apply plugin: 'com.android.application'
+
+configurations {
+    debugCompile
+    releaseCompile
+}
+
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
-        applicationId "org.sqlite.customsqlitetest.fts"
+        applicationId "org.sqlite.customsqlitetest"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -22,7 +28,7 @@ android {
 
     buildTypes {
         release {
-            debuggable true
+            debuggable false
             minifyEnabled false
             signingConfig signingConfigs.myConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -33,7 +39,8 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    debugCompile project(path: ':sqlite3', configuration: 'debug')
-    releaseCompile project(path: ':sqlite3', configuration: 'release')
+    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation project(':sqlite3')
+//    implementation project(path: ':sqlite3', configuration: 'debug')
+//    implementation project(path: ':sqlite3', configuration: 'release')
 }

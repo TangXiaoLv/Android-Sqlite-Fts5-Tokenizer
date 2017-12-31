@@ -1,0 +1,30 @@
+//修改的源码
+==187991
+//sqlite3Fts5ParseError(pParse, "fts5: syntax error near \"%.1s\"", z);
+//return FTS5_EOF;
+==187991
+
+//分词时移除特殊字符检查
+==187959
+//case '(':  tok = FTS5_LP;    break;
+//case ')':  tok = FTS5_RP;    break;
+//case '{':  tok = FTS5_LCP;   break;
+//case '}':  tok = FTS5_RCP;   break;
+//case ':':  tok = FTS5_COLON; break;
+//case ',':  tok = FTS5_COMMA; break;
+//case '+':  tok = FTS5_PLUS;  break;
+case '*':  tok = FTS5_STAR;  break;
+//case '-':  tok = FTS5_MINUS; break;
+case '\0': tok = FTS5_EOF;   break;
+==187959
+
+//添加分词器
+==202739
++==> #include "wcicu_tokenizer.h"
+==202739
+
+==202753
++==> { "wcicu",    {fts5WcicuCreate, fts5WcicuDelete, fts5WcicuTokenize }},
+==202753
+
+

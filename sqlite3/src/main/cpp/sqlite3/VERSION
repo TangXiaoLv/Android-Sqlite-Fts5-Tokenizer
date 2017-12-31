@@ -1,0 +1,7 @@
+Comment:	Updates to build.gradle. At this point code and tests run against API Level 16. They may also run against lower API levels, but that is untested.
+Downloads:	Tarball | ZIP archive | SQL archive
+Timelines:	family | ancestors | experimental
+Files:	files | file ages | folders
+SHA1:	52cf12a73e7673230d0a0dbee40711ebaf8bb61a
+User & Date:	dan on 2017-11-15 21:12:47
+version：3.21.0
